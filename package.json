@@ -1,0 +1,28 @@
+{
+  "name": "mpt-gpt-serverless",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "sst dev --stage dev",
+    "build": "sst build",
+    "deploy": "sst deploy --stage production",
+    "remove": "sst remove",
+    "console": "sst console",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@tsconfig/node18": "^18.2.2",
+    "@types/uuid": "^9.0.5",
+    "aws-cdk-lib": "2.95.1",
+    "constructs": "10.2.69",
+    "sst": "^2.29.2",
+    "typescript": "^5.2.2"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
