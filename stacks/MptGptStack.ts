@@ -1,4 +1,5 @@
 // import { Table } from "aws-cdk-lib/aws-dynamodb";
+import { Scope } from "aws-cdk-lib/aws-ecs";
 import { Api, Config, StackContext, StaticSite, Table, use } from "sst/constructs";
 
 export function mptGptApiStack({ stack }: StackContext) {
@@ -32,9 +33,12 @@ export function mptGptApiStack({ stack }: StackContext) {
 
 export function mptGptWebStack({stack}: StackContext) {
   const api = use(mptGptApiStack);
-
   const web = new StaticSite(stack, "web", {
     path: "packages/web",
+    customDomain: {
+      domainName: "gpt.mephisto.aufederal2022.com",
+      hostedZone: "aufederal2022.com"
+    },
     buildOutput: "build",
     buildCommand: "npm run build",
     environment: {
