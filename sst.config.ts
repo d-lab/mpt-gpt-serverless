@@ -5,8 +5,7 @@ export default {
   config(_input) {
     return {
       name: "mpt-gpt-serverless",
-      stage: process.env.SST_STAGE,
-      profile: "279615518931_svc",
+      stage: process.env.SST_STAGE || "dev",
       region: "ap-southeast-2"
     };
   },
