@@ -5,9 +5,13 @@ import { Api, Config, StackContext, StaticSite, Table, use } from "sst/construct
 export function mptGptApiStack({ stack }: StackContext) {
   const table = new Table(stack, "Events", {
     fields: {
-      id: "string"
+      pk: "string",
+      sk: "string"
     },
-    primaryIndex: { partitionKey: "id" }
+    primaryIndex: {
+      partitionKey: "pk",
+      sortKey: "sk"
+    }
   })
   const GPT_URL = new Config.Secret(stack, "GPT_URL");
   const GPT_TOKEN = new Config.Secret(stack, "GPT_TOKEN");
@@ -23,11 +27,11 @@ export function mptGptApiStack({ stack }: StackContext) {
       "POST /events": "packages/functions/src/events.handler",
     }
   })
-  
+
   stack.addOutputs({
     ApiEndpoint: api.url,
   });
-  
+
   return api
 }
 
@@ -36,7 +40,7 @@ export function mptGptWebStack({stack}: StackContext) {
   const web = new StaticSite(stack, "web", {
     path: "packages/web",
     customDomain: {
-      domainName: "gpt.mephisto.aufederal2022.com",
+      domainName: stack.stage == "prod" ? "gpt.mephisto.aufederal2022.com" : "dev.gpt.mephisto.aufederal2022.com",
       hostedZone: "aufederal2022.com"
     },
     buildOutput: "build",
@@ -45,7 +49,7 @@ export function mptGptWebStack({stack}: StackContext) {
       REACT_APP_API_URL: api.url,
     },
   })
-  
+
   stack.addOutputs({
     Web: web.url
   })

@@ -1,10 +1,19 @@
 import AWS from "aws-sdk";
-import * as uuid from "uuid";
+import { v4 as uuid } from 'uuid';
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
 
+const getPartitionKey = (provider: string, metaData: any) => {
+  if (provider === "prolific") {
+    return metaData.prolific_study_id;
+  }
+  if (provider === "mturk" || provider === "mturk_sandbox") {
+    return metaData.hit_id;
+  }
+  return uuid();
+}
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
   const {data} = JSON.parse(event.body!);
   const events = data.map(({provider, event, metadata}: {provider: string, event: object, metadata: object}) => ({
@@ -17,7 +26,8 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
     const params = {
       TableName: `${process.env.SST_Table_tableName_Events}`,
       Item: {
-        id: uuid.v1(),
+        pk: getPartitionKey(evt.provider, evt.metaData),
+        sk: uuid(),
         provider: evt.provider,
         metaData: evt.metaData,
         log: evt.log,

@@ -1,13 +1,22 @@
 import AWS from "aws-sdk";
-import * as uuid from "uuid";
 import { gptModel } from "../model/gpt.model"
 import { Config } from "sst/node/config";
+import { v4 as uuid } from 'uuid';
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
 import fetch from "node-fetch";
 
+const getPartitionKey = (provider: string, metaData: any) => {
+  if (provider === "prolific") {
+    return metaData.prolific_study_id;
+  }
+  if (provider === "mturk" || provider === "mturk_sandbox") {
+    return metaData.hit_id;
+  }
+  return uuid();
+}
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
   const {
     messages,
@@ -44,7 +53,8 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
     const params = {
       TableName: `${process.env.SST_Table_tableName_Events}`,
       Item: {
-        id: uuid.v1(),
+        pk: getPartitionKey(provider, metadata),
+        sk: uuid(),
         provider: provider,
         metaData: metadata,
         log: {

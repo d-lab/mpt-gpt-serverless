@@ -10,7 +10,7 @@ node version >= 18.8.8
     + sudo su
     + cd .aws
     + vim credentials
-    + patse key to credentials file
+    + paste key to credentials file
 
 ## How to setup environment
  - npx sst secrets set GPT_URL {url}
