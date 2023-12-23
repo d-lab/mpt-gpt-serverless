@@ -4,9 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "sst dev --stage dev",
+    "dev-api": "sst dev --stage=dev api",
+    "dev-web": "sst dev --stage=dev web",
+    "dev": "sst dev --stage=dev",
     "build": "sst build",
-    "deploy": "sst deploy --stage prod",
+    "deploy-api": "sst deploy --stage=prod api",
+    "deploy-web": "sst deploy --stage=prod web",
+    "deploy": "sst deploy --stage=prod",
     "remove": "sst remove",
     "console": "sst console",
     "typecheck": "tsc --noEmit"
@@ -23,6 +27,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "dotenv": "^16.3.1",
     "node-fetch": "^3.3.2"
   }
 }

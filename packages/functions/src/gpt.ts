@@ -1,22 +1,14 @@
 import AWS from "aws-sdk";
 import { gptModel } from "../model/gpt.model"
 import { Config } from "sst/node/config";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
+import { getPartitionKey } from "./utils";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
 import fetch from "node-fetch";
 
-const getPartitionKey = (provider: string, metaData: any) => {
-  if (provider === "prolific") {
-    return metaData.prolific_study_id;
-  }
-  if (provider === "mturk" || provider === "mturk_sandbox") {
-    return metaData.hit_id;
-  }
-  return uuid();
-}
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
   const {
     messages,

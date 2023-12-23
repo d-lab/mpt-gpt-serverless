@@ -18,11 +18,21 @@ node version >= 18.8.8
 
 ## How to run
   - npm install
-  - npm run dev: run dev environment
+  - npm run dev-api: run api environment
+  - npm run dev-web: run web environment
+  - npm run dev: run dev environment (both FE & BE)
+
   - npm run build: build project
-  - npm run deploy: deploy as production
+
+  - npm run deploy-api: deploy api
+  - npm run deploy-web: deploy web
+  - npm run deploy: deploy as production (both FE & BE)
   - npm run remove: remove from aws cloudfront
 
 ## How to run Front end
   - Run in folder web: cd packages/web
   - npm run dev
+
+## Setup env
+  - View .env.example
+  - Create new env file and set value for it
