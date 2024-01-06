@@ -16,8 +16,8 @@ export function mptGptApiStack({ stack }: StackContext) {
 
   const api = new Api(stack, "Api", {
     customDomain:{
-      domainName: stack.stage == "prod" ? "api.gpt.mephisto.aufederal2022.com" : "dev.api.gpt.mephisto.aufederal2022.com",
-      hostedZone: "aufederal2022.com"
+      domainName: stack.stage == "prod" ? "api.gpt.dlab-mephisto.com" : "dev.api.gpt.dlab-mephisto.com",
+      hostedZone: "dlab-mephisto.com"
     },
     defaults: {
       function: {

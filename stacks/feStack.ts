@@ -10,8 +10,8 @@ export function mptGptWebStack({stack}: StackContext) {
   const web = new StaticSite(stack, "web", {
     path: "packages/web",
     customDomain: {
-      domainName: stack.stage == "prod" ? "gpt.mephisto.aufederal2022.com" : "dev.gpt.mephisto.aufederal2022.com",
-      hostedZone: "aufederal2022.com"
+      domainName: stack.stage == "prod" ? "gpt.dlab-mephisto.com" : "dev.gpt.dlab-mephisto.com",
+      hostedZone: "dlab-mephisto.com"
     },
     buildOutput: "build",
     buildCommand: "npm run build",
