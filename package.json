@@ -17,10 +17,11 @@
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",
+    "@types/aws-lambda": "^8.10.125",
     "@types/uuid": "^9.0.5",
     "aws-cdk-lib": "2.95.1",
     "constructs": "10.2.69",
-    "sst": "^2.29.2",
+    "sst": "2.41.2",
     "typescript": "^5.2.2"
   },
   "workspaces": [
